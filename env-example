@@ -1,0 +1,4 @@
+## development , production
+NODE_ENV=development
+PORT=3000
+DATABASE_URL=mongodb://admin:admin123@localhost/tommorowsed?retryWrites=true&w=majority
