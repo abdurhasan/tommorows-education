@@ -4,7 +4,7 @@ import { Role } from 'src/common/types';
 @InputType()
 export class UpdateUserInput {
   @Field()
-  _id: string;
+  userId: string;
   @Field(() => Role)
   role: Role;
 }

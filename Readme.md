@@ -1,9 +1,9 @@
 
 RUN WITH DOCKER-COMPOSE
 
-> docker-compose up 
+> docker-compose up --build --remove-orphans
 or
-> docker-compose up -d
+> docker-compose up -d --build --remove-orphans
 
 
 RUN WITH NPM 
@@ -12,6 +12,8 @@ RUN WITH NPM
 > npm run start:dev
 
 ## Services usage : 
+ - Graphql GUI is available on route /graphql
+ - Postman collection : https://www.getpostman.com/collections/d963958c0b6665cb3876
 
 - You can use this credentials
 
@@ -19,7 +21,7 @@ RUN WITH NPM
     - Admin  : 
 
     username : "admin"   
-    password : "admin"
+    password : "admin123"
 
     - Students : 
 
@@ -39,25 +41,28 @@ RUN WITH NPM
   
   ```
 
-##  Services Based on Role
-
-# Global ( any user role can use ) :
-- getListUsers : list of all users
+# Public Services ( no need authorization ) :
 - login        :  getting token for auth
 - register     :  Register new user , default role is student
-- currentUser  :  get user personal information based on his token
 
-# Admin Role :
-- updateUserRole : updating user role as he pleased ( Student , Teacher ) ,except Admin
+## Authenticated and Authorized services :
+  - Request Headers
+  - Authorization : {{ Token }}
+  # Global Services ( any user role can use ) :
+  - getListUsers :  list of all users
+  - currentUser  :  get user personal information based on his token
 
-# Teacher Role :
-- getChallenges   :  get all challenges and it's detail
-- createChallenge :  teacher create challenge and assign a student
-- teacherReviewingChallenge
+  # Admin Role :
+  - updateUserRole : updating user role as he pleased ( Student , Teacher ) ,except Admin
 
-# User Role :
-- getChallenges           :   ( only get his-assigned challenges )
-- studentSubmitAssignment :   student submit the given challenge
+  # Teacher Role :
+  - getChallenges   :  get all challenges and it's detail
+  - createChallenge :  teacher create challenge and assign a student
+  - teacherReviewingChallenge
+
+  # User Role :
+  - getChallenges           :   ( only get his-assigned challenges )
+  - studentSubmitAssignment :   student submit the given challenge
 
 
 

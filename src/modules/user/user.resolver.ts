@@ -23,8 +23,8 @@ export class UserResolver {
   @Roles(Role.Admin)
   @Mutation(() => Boolean)
   async updateUserRole(@Args('params') params: UpdateUserInput) {
-    try {
-      if (params.role !== Role.Admin) {
+    try {      
+      if (params.role === Role.Admin) {
         throw new Error('can not assign to admin role');
       }
       await this.service.updateUserRole(params);

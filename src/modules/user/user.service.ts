@@ -13,7 +13,7 @@ export class UserService {
   async updateUserRole(params: UpdateUserInput) {
     await this.repository.update(
       {
-        _id: new ObjectId(params._id),
+        _id: new ObjectId(params.userId),
       },
       { role: params.role },
     );
