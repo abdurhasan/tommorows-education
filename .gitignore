@@ -395,7 +395,6 @@ Temporary Items
 =======
 # Local
 .env
-dist
 logs
 #src/graphql.ts
 package-lock.json
