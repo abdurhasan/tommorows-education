@@ -1,7 +1,7 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "../config/config.module";
-import { ConfigService } from "../config/config.service";
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '../config/config.module';
+import { ConfigService } from '../config/config.service';
 
 @Module({
   imports: [
@@ -9,12 +9,12 @@ import { ConfigService } from "../config/config.service";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        type: "mongodb",
+        type: 'mongodb',
         url: config.DATABASE_URL,
         useNewUrlParser: true,
         entities: [
-          __dirname + "/../../models/**/*{.ts,.js}",
-          __dirname + "/../../**/*.model{.ts,.js}",
+          __dirname + '/../../models/**/*{.ts,.js}',
+          __dirname + '/../../**/*.model{.ts,.js}',
         ],
         synchronize: false,
         useUnifiedTopology: true,

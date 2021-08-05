@@ -1,13 +1,13 @@
-import { Module } from "@nestjs/common";
-import { JwtModule } from "@nestjs/jwt";
-import { AuthService } from "./auth.service";
+import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './auth.service';
 
-import { AuthResolver } from "./auth.resolver";
-import { ConfigModule } from "../config/config.module";
-import { ConfigService } from "../config/config.service";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { User } from "src/models/user.model";
-import { DEFAULT_TOKEN_EXPIRED } from "src/common/constants";
+import { AuthResolver } from './auth.resolver';
+import { ConfigModule } from '../config/config.module';
+import { ConfigService } from '../config/config.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/models/user.model';
+import { DEFAULT_TOKEN_EXPIRED } from 'src/common/constants';
 
 @Module({
   imports: [

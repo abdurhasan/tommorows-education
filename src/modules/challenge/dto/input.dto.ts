@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateChallengeInput {
@@ -9,9 +9,9 @@ export class CreateChallengeInput {
 }
 
 @InputType()
-export class StudentAnswerChallengeInput {
+export class StudentSubmitAssignmentInput {
   @Field()
-  _id: string;
+  challengeId: string;
   @Field()
   solution: string;
 }
@@ -19,7 +19,7 @@ export class StudentAnswerChallengeInput {
 @InputType()
 export class TeacherReviewingChallengeInput {
   @Field()
-  _id: string;
+  challengeId: string;
   @Field()
   comment: string;
   @Field({ nullable: true })

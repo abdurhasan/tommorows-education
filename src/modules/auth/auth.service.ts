@@ -1,24 +1,25 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "src/models/user.model";
-import { Repository } from "typeorm";
-import { LoginInput, RegisterInput } from "./dto/input.dto";
-import * as isEmpty from "is-empty";
-import { JwtService } from "@nestjs/jwt";
-import * as bcrypt from "bcrypt";
-import { INVALID_CREDENTIAL } from "src/common/constants";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/models/user.model';
+import { Repository } from 'typeorm';
+import { RegisterInput } from './dto/register.input';
+import * as isEmpty from 'is-empty';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { INVALID_CREDENTIAL } from 'src/common/constants';
+import { LoginInput } from './dto/login.input';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private repository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async login(params: LoginInput): Promise<string> {
     const validatedUser = await this.verifyByCredential(
       params.username,
-      params.password
+      params.password,
     );
     return await this.jwtService.signAsync({ _id: validatedUser._id });
   }

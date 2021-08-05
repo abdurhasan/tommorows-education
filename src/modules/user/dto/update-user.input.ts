@@ -1,5 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { Role } from "src/common/types";
+import { Field, InputType } from '@nestjs/graphql';
+import { Role } from 'src/common/types';
 
 @InputType()
 export class UpdateUserInput {

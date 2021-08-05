@@ -1,9 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
-import { GqlExecutionContext } from "@nestjs/graphql";
-import { Reflector } from "@nestjs/core";
-import { Role } from "src/common/types";
-import { ROLES_KEY } from "src/decorator/role.decorator";
-import { User } from "src/models/user.model";
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { Reflector } from '@nestjs/core';
+import { Role } from 'src/common/types';
+import { ROLES_KEY } from 'src/decorator/role.decorator';
+import { User } from 'src/models/user.model';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

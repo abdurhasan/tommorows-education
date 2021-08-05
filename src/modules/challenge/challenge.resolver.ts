@@ -1,41 +1,65 @@
-import { UseGuards } from "@nestjs/common";
-import { Args, Mutation, Resolver, Query } from "@nestjs/graphql";
-import { PaginationInput, Role } from "src/common/types";
-import { Roles } from "src/decorator/role.decorator";
-import { CurrentUser } from "src/decorator/user.decorator";
-import { RolesGuard } from "src/guards/roles.guard";
-import { Challenge } from "src/models/challenge.model";
-import { User } from "src/models/user.model";
-import { ChallengeService } from "./challenge.service";
+import { UseGuards } from '@nestjs/common';
+import {
+  Args,
+  Mutation,
+  Resolver,
+  Query,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
+import { PaginationInput, Role } from 'src/common/types';
+import { Roles } from 'src/decorator/role.decorator';
+import { CurrentUser } from 'src/decorator/user.decorator';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { Challenge } from 'src/models/challenge.model';
+import { User } from 'src/models/user.model';
+import { UserService } from '../user/user.service';
+import { ChallengeService } from './challenge.service';
 import {
   CreateChallengeInput,
-  StudentAnswerChallengeInput,
+  StudentSubmitAssignmentInput,
   TeacherReviewingChallengeInput,
-} from "./dto/input.dto";
-import { UserGetChallengeResponse } from "./dto/response.dto";
+} from './dto/input.dto';
+import { GetChallengeResponse } from './dto/response.dto';
 
-@Resolver()
+@Resolver(Challenge)
 export class ChallengeResolver {
-  constructor(private readonly service: ChallengeService) { }
+  constructor(
+    private readonly service: ChallengeService,
+    private readonly userService: UserService,
+  ) {}
 
   @UseGuards(RolesGuard)
   @Roles(Role.Teacher)
   @Mutation(() => Challenge)
   async createChallenge(
-    @Args("params") params: CreateChallengeInput,
-    @CurrentUser() teacher: User
+    @Args('params') params: CreateChallengeInput,
+    @CurrentUser() teacher: User,
   ) {
-    return await this.service.createChallenge(params, teacher);
+    const data = await this.service.createChallenge(params, teacher);
+    return data;
+  }
+
+  @Query(() => GetChallengeResponse)
+  async getChallenges(
+    @Args('params') params: PaginationInput,
+    @CurrentUser() user: User,
+  ) {
+    return await this.service.getChallenges({
+      page: params.page,
+      limit: params.limit,
+      user,
+    });
   }
 
   @UseGuards(RolesGuard)
   @Roles(Role.Student)
   @Mutation(() => Boolean)
-  async studentAnswerChallenge(
-    @Args("params") params: StudentAnswerChallengeInput,
-    @CurrentUser() student: User
+  async studentSubmitAssignment(
+    @Args('params') params: StudentSubmitAssignmentInput,
+    @CurrentUser() student: User,
   ) {
-    await this.service.studentAnswerChallenge(params, student);
+    await this.service.studentSubmitAssignment(params, student);
     return true;
   }
 
@@ -43,37 +67,28 @@ export class ChallengeResolver {
   @Roles(Role.Teacher)
   @Mutation(() => Boolean)
   async teacherReviewingChallenge(
-    @Args("params") params: TeacherReviewingChallengeInput,
-    @CurrentUser() teacher: User
+    @Args('params') params: TeacherReviewingChallengeInput,
+    @CurrentUser() teacher: User,
   ) {
     await this.service.teacherReviewingChallenge(params, teacher);
     return true;
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(Role.Student)
-  @Query(() => UserGetChallengeResponse)
-  async studentGetChallenge(
-    @Args("params") params: PaginationInput,
-    @CurrentUser() student: User
-  ) {
-    return await this.service.getChallenges({
-      page: params.page,
-      limit: params.limit,
-      student: student._id.toString(),
-    });
+  @ResolveField()
+  async student(@Parent() challenge: Challenge) {
+    const { student } = challenge;
+    return await this.userService.userFindOne(student);
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(Role.Teacher)
-  @Query(() => UserGetChallengeResponse)
-  async teacherGetChallenge(
-    @Args("params") params: PaginationInput,
-  ) {
-    return await this.service.getChallenges({
-      page: params.page,
-      limit: params.limit,
-      student: '',
-    });
+  @ResolveField()
+  async reviewer(@Parent() challenge: Challenge) {
+    const { reviewer } = challenge;
+    return await this.userService.userFindOne(reviewer);
+  }
+
+  @ResolveField()
+  async createdBy(@Parent() challenge: Challenge) {
+    const { createdBy } = challenge;
+    return await this.userService.userFindOne(createdBy);
   }
 }

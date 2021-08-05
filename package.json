@@ -1,7 +1,7 @@
 {
   "name": "tommorows-education",
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Tommorow's education Assignment",
   "license": "MIT",
   "author": "github.com/abdurhasan",
   "scripts": {
@@ -60,10 +60,5 @@
     "ts-node": "^9.0.0",
     "tsconfig-paths": "3.10.1",
     "typescript": "4.3.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn format && yarn lint"
-    }
   }
 }

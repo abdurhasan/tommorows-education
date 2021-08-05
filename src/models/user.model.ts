@@ -5,14 +5,13 @@ import {
   Entity,
   ObjectID,
   ObjectIdColumn,
-  UpdateDateColumn,
-} from "typeorm";
-import * as bcrypt from "bcrypt";
-import { Field, HideField, ID, ObjectType } from "@nestjs/graphql";
-import { Role } from "src/common/types";
-import { SALT_ROUNDS } from "src/common/constants";
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
+import { Role } from 'src/common/types';
+import { SALT_ROUNDS } from 'src/common/constants';
 
-@Entity("User")
+@Entity('User')
 @ObjectType()
 export class User {
   constructor(params?: Partial<User>) {
@@ -37,10 +36,6 @@ export class User {
   @Column()
   @Field()
   fullname: string;
-
-  @UpdateDateColumn()
-  @Field({ nullable: true })
-  updatedAt: Date;
 
   @CreateDateColumn()
   @Field({ nullable: true })

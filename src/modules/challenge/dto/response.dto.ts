@@ -1,9 +1,9 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { PaginationResponse } from "src/common/types";
-import { Challenge } from "src/models/challenge.model";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { PaginationResponse } from 'src/common/types';
+import { Challenge } from 'src/models/challenge.model';
 
 @ObjectType()
-export class UserGetChallengeResponse extends PaginationResponse {
+export class GetChallengeResponse extends PaginationResponse {
   @Field(() => [Challenge])
   data: Challenge[];
 }
