@@ -11,6 +11,7 @@ RUN WITH NPM
 > npm install
 > npm run start:dev
 
+Demo App : https://tomorrow-education.herokuapp.com/graphql
 ## Services usage : 
  - Graphql GUI is available on route /graphql
  - Postman collection : https://www.getpostman.com/collections/d963958c0b6665cb3876
